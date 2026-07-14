@@ -1080,6 +1080,7 @@ async function loadUserData() {
 
 
 // ==================== SISTEMA SEGNALAZIONE ====================
+// ===== SISTEMA SEGNALAZIONE =====
 function setupReportSystem() {
     const fab = document.getElementById('reportFab');
     const modal = document.getElementById('reportModal');
@@ -1105,16 +1106,14 @@ function setupReportSystem() {
 
     closeBtn.addEventListener('click', closeModal);
 
-    // Chiudi cliccando fuori dalla modale
+    // Chiudi cliccando fuori
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
 
     // Chiudi con ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
 
     // Contatore caratteri
@@ -1125,7 +1124,6 @@ function setupReportSystem() {
     // Invio form
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const submitBtn = form.querySelector('.report-submit');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Invio...';
@@ -1138,21 +1136,16 @@ function setupReportSystem() {
             screen: document.querySelector('.screen.active')?.id || 'unknown',
             timestamp: Date.now(),
             date: new Date().toISOString(),
-            userAgent: navigator.userAgent,
             url: window.location.href
         };
 
         try {
-            // Salva su Firebase
             if (window.db) {
                 await window.db.ref('reports').push(report);
             }
-
-            // Mostra successo
             form.style.display = 'none';
             successMsg.style.display = 'block';
 
-            // Reset dopo 2.5 secondi
             setTimeout(() => {
                 form.reset();
                 charCount.textContent = '0';
@@ -1162,10 +1155,9 @@ function setupReportSystem() {
                 submitBtn.textContent = 'Invia segnalazione';
                 closeModal();
             }, 2500);
-
         } catch (err) {
-            console.error('Errore invio segnalazione:', err);
-            alert('Errore nell\'invio. Riprova più tardi.');
+            console.error('Errore invio:', err);
+            alert('Errore invio. Riprova.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Invia segnalazione';
         }
@@ -1191,6 +1183,7 @@ document.getElementById('expertCheckbox').addEventListener('change', function ()
 
 generaLibriConPaginazione();
 setupUserProfile();
+setupReportSystem();
 
 document.getElementById('nextButton').addEventListener('click', nextQuestion);
 document.getElementById('studioCard').addEventListener('click', giraFlashcard);

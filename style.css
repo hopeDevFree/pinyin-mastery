@@ -1377,42 +1377,51 @@ h1 {
     }
 }
 
-
-/* === FLOATING ACTION BUTTON (FAB) === */
+/* === BOTTONE SEGNALA (coerente con il resto dell'app) === */
 .report-fab {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    border: 2px solid var(--border);
+    border-bottom: 3px solid var(--border-strong);
+    border-radius: 14px;
+    padding: 8px 14px;
+    font-weight: 750;
+    font-size: 0.82rem;
+    color: var(--muted);
     cursor: pointer;
-    display: grid;
-    place-items: center;
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
     z-index: 999;
+    box-shadow: var(--shadow);
+    width: auto;
+    height: auto;
 }
 
 .report-fab:hover {
-    background: var(--primary-dark);
-    transform: scale(1.08);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: var(--primary);
+    border-color: var(--border-strong);
 }
 
 .report-fab:active {
-    transform: scale(0.95);
+    transform: translateY(1px);
+    border-bottom-width: 2px;
 }
 
-/* === MODALE SEGNALAZIONE === */
+.report-fab::before {
+    content: "⚠️";
+    font-size: 1rem;
+}
+
+/* === MODALE SEGNALAZIONE (coerente con il resto dell'app) === */
 .report-modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(26, 32, 44, 0.5);
     backdrop-filter: blur(4px);
     z-index: 1000;
     align-items: center;
@@ -1426,26 +1435,16 @@ h1 {
 }
 
 .report-modal {
-    background: white;
-    border-radius: 20px;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
     padding: 24px;
     max-width: 480px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.25s ease;
 }
 
 .report-header {
@@ -1453,34 +1452,42 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding-bottom: 16px;
+    padding-bottom: 14px;
     border-bottom: 2px solid var(--border);
 }
 
 .report-header h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 850;
     color: var(--primary);
     margin: 0;
 }
 
 .report-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--muted);
-    cursor: pointer;
+    background: white;
+    border: 2px solid var(--border);
+    border-bottom: 3px solid var(--border-strong);
+    border-radius: 10px;
     width: 32px;
     height: 32px;
-    border-radius: 50%;
     display: grid;
     place-items: center;
-    transition: all 0.15s;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.1rem;
+    font-weight: 850;
+    transition: all 0.12s;
 }
 
 .report-close:hover {
-    background: var(--border);
     color: var(--danger);
+    border-color: var(--danger-light);
+    background: var(--danger-light);
+}
+
+.report-close:active {
+    transform: translateY(1px);
+    border-bottom-width: 2px;
 }
 
 .report-form {
@@ -1496,62 +1503,67 @@ h1 {
 }
 
 .report-field label {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 750;
+    color: var(--primary);
 }
 
 .report-field select,
 .report-field input,
 .report-field textarea {
+    width: 100%;
     padding: 12px 14px;
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-bottom: 3px solid var(--border-strong);
+    border-radius: 14px;
     font-size: 0.95rem;
+    font-weight: 600;
     font-family: inherit;
     background: #f8fafc;
-    transition: all 0.15s;
     color: var(--text);
+    transition: all 0.15s;
 }
 
 .report-field select:focus,
 .report-field input:focus,
 .report-field textarea:focus {
     outline: none;
-    border-color: var(--accent);
     background: white;
-    box-shadow: 0 0 0 3px var(--accent-light);
+    border-color: var(--primary);
+    border-bottom-color: #111;
 }
 
 .report-field textarea {
     resize: vertical;
-    min-height: 100px;
-    font-family: inherit;
+    min-height: 90px;
 }
 
 .report-counter {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 700;
     color: var(--muted-2);
     text-align: right;
     margin-top: -2px;
 }
 
 .report-submit {
-    background: var(--accent);
+    background: var(--primary);
     color: white;
     border: none;
-    border-bottom: 3px solid var(--accent-dark);
-    border-radius: 12px;
+    border-bottom: 3px solid #111;
+    border-radius: 14px;
     padding: 14px;
     font-weight: 850;
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.12s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     margin-top: 8px;
 }
 
 .report-submit:hover:not(:disabled) {
-    background: var(--accent-dark);
+    background: var(--primary-dark);
 }
 
 .report-submit:active:not(:disabled) {
@@ -1569,9 +1581,9 @@ h1 {
     color: var(--accent-dark);
     border: 1.5px solid var(--accent);
     padding: 14px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.95rem;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 0.9rem;
     text-align: center;
     animation: fadeIn 0.3s ease;
 }
@@ -1581,8 +1593,8 @@ h1 {
     .report-fab {
         bottom: 16px;
         right: 16px;
-        width: 50px;
-        height: 50px;
+        padding: 7px 12px;
+        font-size: 0.78rem;
     }
 
     .report-modal {
