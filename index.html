@@ -135,6 +135,50 @@
         </div>
     </div>
 </div>
+
+
+<!-- BOTTONE SEGNALA (FAB) -->
+<button id="reportBtn" class="report-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+        <line x1="4" y1="22" x2="4" y2="15"></line>
+    </svg>
+    Segnala
+</button>
+
+<!-- MODALE SEGNALAZIONE -->
+<div id="reportModal" class="report-modal-overlay">
+    <div class="report-modal">
+        <div class="report-modal-header">
+            <h3>📝 Segnala un problema</h3>
+            <button id="reportClose" class="report-close">✕</button>
+        </div>
+        <form id="reportForm" class="report-form">
+            <div class="report-field">
+                <label for="reportType">Tipo di problema</label>
+                <select id="reportType" required>
+                    <option value="">Seleziona...</option>
+                    <option value="traduzione">🔤 Errore traduzione</option>
+                    <option value="pinyin">🗣️ Errore pinyin</option>
+                    <option value="bug">🐛 Bug dell'app</option>
+                    <option value="suggerimento">💡 Suggerimento</option>
+                    <option value="altro">📝 Altro</option>
+                </select>
+            </div>
+            <div class="report-field">
+                <label for="reportMessage">Descrivi il problema</label>
+                <textarea id="reportMessage" maxlength="500" required placeholder="Scrivi qui..."></textarea>
+                <div class="char-counter"><span id="charCount">0</span>/500</div>
+            </div>
+            <button type="submit" class="report-submit">Invia segnalazione</button>
+        </form>
+        <div id="reportSuccess" class="report-success" style="display: none;">
+            ✅ Grazie! Segnalazione ricevuta.
+        </div>
+    </div>
+</div>
+
 <!-- 1. Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -165,52 +209,5 @@
 <!-- 3. Tuoi file -->
 <script src="data.js"></script>
 <script src="app.js"></script>
-
-
-<!-- BOTTONE SEGNALA (stile coerente) -->
-<button class="report-btn" id="reportBtn">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-    </svg>
-    Segnala
-</button>
-
-<!-- MODALE SEGNALAZIONE -->
-<div class="report-overlay" id="reportOverlay">
-    <div class="report-modal">
-        <div class="report-modal-header">
-            <h3>📝 Segnala un problema</h3>
-            <button class="report-close" id="reportClose">✕</button>
-        </div>
-        <form id="reportForm" class="report-form">
-            <div class="report-field">
-                <label>Tipo di problema</label>
-                <select id="reportType" required>
-                    <option value="">Seleziona...</option>
-                    <option value="translation">🔤 Errore traduzione</option>
-                    <option value="pinyin">🗣️ Errore pinyin</option>
-                    <option value="bug">🐛 Bug dell'app</option>
-                    <option value="suggestion">💡 Suggerimento</option>
-                    <option value="other">📝 Altro</option>
-                </select>
-            </div>
-            <div class="report-field">
-                <label>Descrivi il problema</label>
-                <textarea id="reportMessage" rows="4" placeholder="Scrivi qui..." required maxlength="500"></textarea>
-                <div class="char-counter"><span id="charCount">0</span>/500</div>
-            </div>
-            <div class="report-field">
-                <label>Email (opzionale)</label>
-                <input type="email" id="reportEmail" placeholder="tua@email.com">
-            </div>
-            <button type="submit" class="report-submit">Invia segnalazione</button>
-            <div class="report-success" id="reportSuccess" style="display:none;">
-                ✅ Grazie! Segnalazione ricevuta.
-            </div>
-        </form>
-    </div>
-</div>
 </body>
 </html>

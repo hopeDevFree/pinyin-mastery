@@ -1377,8 +1377,8 @@ h1 {
     }
 }
 
-/* === BOTTONE SEGNALA (coerente con il resto dell'app) === */
-.report-fab {
+/* === BOTTONE SEGNALA === */
+.report-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -1397,26 +1397,57 @@ h1 {
     transition: all 0.15s;
     z-index: 999;
     box-shadow: var(--shadow);
-    width: auto;
-    height: auto;
 }
 
-.report-fab:hover {
+.report-btn:hover {
     color: var(--primary);
     border-color: var(--border-strong);
 }
 
-.report-fab:active {
+.report-btn:active {
     transform: translateY(1px);
     border-bottom-width: 2px;
 }
 
-.report-fab::before {
-    content: "⚠️";
-    font-size: 1rem;
+.report-btn svg {
+    opacity: 0.7;
 }
 
-/* === MODALE SEGNALAZIONE (coerente con il resto dell'app) === */
+/* Responsive */
+@media (max-width: 600px) {
+    .report-btn {
+        bottom: 16px;
+        right: 16px;
+        padding: 7px 12px;
+        font-size: 0.78rem;
+    }
+}
+
+.report-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+}
+
+.report-modal-header h3 {
+    font-size: 1.1rem;
+    font-weight: 850;
+    color: var(--primary);
+    margin: 0;
+}
+
+.char-counter {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted-2);
+    text-align: right;
+    margin-top: -2px;
+}
+
+/* === MODALE SEGNALAZIONE (completa) === */
 .report-modal-overlay {
     display: none;
     position: fixed;
@@ -1445,22 +1476,6 @@ h1 {
     overflow-y: auto;
     box-shadow: var(--shadow);
     animation: fadeIn 0.25s ease;
-}
-
-.report-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 14px;
-    border-bottom: 2px solid var(--border);
-}
-
-.report-header h3 {
-    font-size: 1.1rem;
-    font-weight: 850;
-    color: var(--primary);
-    margin: 0;
 }
 
 .report-close {
@@ -1538,14 +1553,6 @@ h1 {
     min-height: 90px;
 }
 
-.report-counter {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--muted-2);
-    text-align: right;
-    margin-top: -2px;
-}
-
 .report-submit {
     background: var(--primary);
     color: white;
@@ -1588,15 +1595,8 @@ h1 {
     animation: fadeIn 0.3s ease;
 }
 
-/* === RESPONSIVE === */
+/* === RESPONSIVE MODALE === */
 @media (max-width: 600px) {
-    .report-fab {
-        bottom: 16px;
-        right: 16px;
-        padding: 7px 12px;
-        font-size: 0.78rem;
-    }
-
     .report-modal {
         padding: 20px;
     }

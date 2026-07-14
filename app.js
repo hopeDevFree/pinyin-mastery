@@ -1082,7 +1082,7 @@ async function loadUserData() {
 // ==================== SISTEMA SEGNALAZIONE ====================
 // ===== SISTEMA SEGNALAZIONE =====
 function setupReportSystem() {
-    const fab = document.getElementById('reportFab');
+    const fab = document.getElementById('reportBtn');
     const modal = document.getElementById('reportModal');
     const closeBtn = document.getElementById('reportClose');
     const form = document.getElementById('reportForm');
@@ -1131,7 +1131,6 @@ function setupReportSystem() {
         const report = {
             type: document.getElementById('reportType').value,
             message: textarea.value.trim(),
-            email: document.getElementById('reportEmail').value.trim() || null,
             userCode: typeof getUserCode === 'function' ? getUserCode() : 'anonymous',
             screen: document.querySelector('.screen.active')?.id || 'unknown',
             timestamp: Date.now(),
