@@ -33,9 +33,15 @@ function getUserCode() {
 
 function saveToFirebase(dataType, data) {
     if (!window.db) return;
-    const userCode = getUserCode();
-    window.db.ref(`users/${userCode}/${dataType}`).set(data)
-        .catch(err => console.warn('Errore salvataggio Firebase:', err.message));
+
+    try {
+        const userCode = getUserCode();
+        window.db.ref(`users/${userCode}/${dataType}`).set(data)
+            .catch(err => console.warn('⚠️ Errore async Firebase:', err.message));
+    } catch (err) {
+        // Cattura errori di validazione sincroni (es. chiavi invalide)
+        console.warn('⚠️ Errore sync Firebase:', err.message);
+    }
 }
 
 function loadFromFirebase(dataType) {
@@ -830,7 +836,7 @@ function generaLibriConPaginazione() {
         const track = document.createElement('div');
         track.className = 'pagination-track';
 
-        const CAPITOLI_PER_PAGINA = 9;
+        const CAPITOLI_PER_PAGINA = window.innerWidth >= 768 ? 12 : 9;
         const numPagine = Math.ceil(capitoliDisponibili.length / CAPITOLI_PER_PAGINA);
 
         for (let pagina = 0; pagina < numPagine; pagina++) {
@@ -1097,7 +1103,19 @@ document.getElementById('studioCard').addEventListener('click', giraFlashcard);
 document.getElementById('studioKnowBtn').addEventListener('click', () => rispondiStudio(true));
 document.getElementById('studioDontKnowBtn').addEventListener('click', () => rispondiStudio(false));
 document.getElementById('retryMistakes').addEventListener('click', () => startQuiz(session.lesson, session.mistakes));
-document.getElementById('changeLesson').addEventListener('click', () => showScreen('lesson'));
+// Bottone "Scegli capitolo" nella schermata finale
+document.getElementById('changeLesson').addEventListener('click', () => {
+    showScreen('lesson');
+});
+
+// Bottone "✕ Esci" nella schermata quiz
+document.getElementById('exitQuiz').addEventListener('click', () => {
+    showScreen('lesson');
+});
+// Bottone "✕ Esci" nella schermata studio
+document.getElementById('exitStudio').addEventListener('click', () => {
+    showScreen('lesson');
+});
 document.getElementById('smartBtn').addEventListener('click', startSmartReview);
 
 // AVVIO

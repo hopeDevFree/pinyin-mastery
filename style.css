@@ -1265,3 +1265,114 @@ h1 {
     color: var(--danger);
     border: 1px solid var(--danger);
 }
+
+/* === LAYOUT DESKTOP (schermi > 768px) === */
+@media (min-width: 768px) {
+    .app {
+        max-width: 900px;
+        padding: 32px;
+    }
+
+    .desktop-layout {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .desktop-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .desktop-main {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* Nascondi header su desktop (troppo spazio) */
+    .home-header {
+        display: none;
+    }
+
+    /* Smart card più compatta */
+    .smart-card {
+        margin: 0;
+    }
+
+    /* Mode selector verticale */
+    .mode-selector {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .mode-btn {
+        width: 100%;
+    }
+
+    /* Expert toggle più compatto */
+    .expert-toggle {
+        margin-bottom: 0;
+        justify-content: flex-start;
+    }
+
+    /* Stats in sidebar */
+    .home-stats {
+        margin-top: 0;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    /* Profile collapsato di default su desktop */
+    .user-profile {
+        margin-top: 0;
+    }
+
+    /* Books container occupa tutta la colonna destra */
+    .books-container {
+        margin-top: 0;
+    }
+
+    /* Lesson grid più larga su desktop */
+    .lesson-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .pagination-page {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    /* Bottoni più grandi su desktop */
+    .lesson-btn {
+        padding: 16px 10px 12px;
+    }
+
+    .lesson-btn span {
+        font-size: 1.5rem;
+    }
+
+    /* Book header più compatto */
+    .book-header {
+        padding: 14px 18px;
+    }
+
+    .book-header h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* === LAYOUT MOBILE (schermi < 768px) === */
+@media (max-width: 767px) {
+    .desktop-layout {
+        display: block;
+    }
+
+    .desktop-sidebar,
+    .desktop-main {
+        display: block;
+    }
+}

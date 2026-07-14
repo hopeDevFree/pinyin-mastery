@@ -681,10 +681,14 @@ const wordsByLesson = {
     ]
 };
 
-// Array flat con ID univoci
+// Funzione per sanitizzare ID (rimuove caratteri non validi per Firebase)
+function sanitizeId(str) {
+    return str.replace(/[.#$\/\[\]]/g, '_');
+}
+
 const vocaboli = Object.entries(wordsByLesson).flatMap(([capitolo, parole]) =>
     parole.map(p => ({
-        id: `${capitolo}_${p.hanzi}_${p.pinyin}`,
+        id: sanitizeId(`${capitolo}_${p.hanzi}_${p.pinyin}`),
         ...p,
         capitolo
     }))

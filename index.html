@@ -16,58 +16,70 @@
             <p class="subtitle">Costruita per te, per l'esame ⚡</p>
         </div>
 
-        <div class="smart-card">
-            <div class="smart-left">
-                <div class="smart-icon">🧠</div>
-                <div class="smart-text">
-                    <h3>Ripasso intelligente</h3>
-                    <p id="smartDesc">Calcolo parole in scadenza...</p>
+        <!-- Layout a 2 colonne per desktop -->
+        <div class="desktop-layout">
+
+            <!-- COLONNA SINISTRA (sidebar) -->
+            <div class="desktop-sidebar">
+                <div class="smart-card">
+                    <div class="smart-left">
+                        <div class="smart-icon">🧠</div>
+                        <div class="smart-text">
+                            <h3>Ripasso intelligente</h3>
+                            <p id="smartDesc">Calcolo parole in scadenza...</p>
+                        </div>
+                    </div>
+                    <button class="smart-btn" id="smartBtn">Avvia</button>
+                </div>
+
+                <div class="mode-selector">
+                    <button class="mode-btn active-mode" id="modeQuizBtn">Quiz</button>
+                    <button class="mode-btn" id="modeStudioBtn">Studio</button>
+                </div>
+
+                <div class="expert-toggle">
+                    <input type="checkbox" id="expertCheckbox" checked>
+                    <label for="expertCheckbox">Modalità esperto (scrittura hanzi)</label>
+                </div>
+
+                <div class="home-stats" id="homeStats"></div>
+
+                <!-- Sezione Profilo Utente -->
+                <div class="user-profile" id="userProfile">
+                    <div class="profile-header">
+                        <h3>👤 Il tuo profilo</h3>
+                        <button class="profile-toggle" id="profileToggle">▼</button>
+                    </div>
+                    <div class="profile-content" id="profileContent" style="display: none;">
+                        <p class="profile-desc">I tuoi progressi sono salvati nel cloud con questo codice:</p>
+                        <div class="user-code-box">
+                            <code id="userCodeDisplay">Caricamento...</code>
+                            <button class="copy-btn" id="copyCodeBtn">📋 Copia</button>
+                        </div>
+                        <p class="profile-hint">Salva questo codice per recuperare i tuoi progressi su un altro
+                            dispositivo.</p>
+                        <div class="restore-section">
+                            <p>Hai già un codice? Inseriscilo qui:</p>
+                            <input type="text" id="restoreCodeInput" placeholder="USER-XXXXXX" class="restore-input">
+                            <button class="restore-btn" id="restoreBtn">Ripristina progressi</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button class="smart-btn" id="smartBtn">Avvia</button>
-        </div>
 
-        <div class="mode-selector">
-            <button class="mode-btn active-mode" id="modeQuizBtn">Quiz</button>
-            <button class="mode-btn" id="modeStudioBtn">Studio</button>
-        </div>
-
-        <div class="expert-toggle">
-            <input type="checkbox" id="expertCheckbox" checked>
-            <label for="expertCheckbox">Modalità esperto (scrittura hanzi)</label>
-        </div>
-
-        <div class="books-container" id="booksContainer">
-            <!-- I libri verranno generati dinamicamente qui -->
-        </div>
-
-        <div class="home-stats" id="homeStats"></div>
-
-        <!-- Sezione Profilo Utente -->
-        <div class="user-profile" id="userProfile">
-            <div class="profile-header">
-                <h3>👤 Il tuo profilo</h3>
-                <button class="profile-toggle" id="profileToggle">▼</button>
-            </div>
-            <div class="profile-content" id="profileContent" style="display: none;">
-                <p class="profile-desc">I tuoi progressi sono salvati nel cloud con questo codice:</p>
-                <div class="user-code-box">
-                    <code id="userCodeDisplay">Caricamento...</code>
-                    <button class="copy-btn" id="copyCodeBtn">📋 Copia</button>
-                </div>
-                <p class="profile-hint">Salva questo codice per recuperare i tuoi progressi su un altro dispositivo.</p>
-                <div class="restore-section">
-                    <p>Hai già un codice? Inseriscilo qui:</p>
-                    <input type="text" id="restoreCodeInput" placeholder="USER-XXXXXX" class="restore-input">
-                    <button class="restore-btn" id="restoreBtn">Ripristina progressi</button>
+            <!-- COLONNA DESTRA (main) -->
+            <div class="desktop-main">
+                <div class="books-container" id="booksContainer">
+                    <!-- I libri verranno generati dinamicamente qui -->
                 </div>
             </div>
+
         </div>
     </div>
 
     <!-- QUIZ SCREEN -->
     <div id="quizScreen" class="screen">
-        <button class="exit-btn" id="changeLesson">✕ Esci</button>
+        <button class="exit-btn" id="exitQuiz">✕ Esci</button>
         <div class="top-progress">
             <div class="top-progress-inner" id="quizProgressBar"></div>
         </div>
@@ -86,7 +98,7 @@
 
     <!-- STUDIO SCREEN -->
     <div id="studioScreen" class="screen">
-        <button class="exit-btn" id="changeLesson">✕ Esci</button>
+        <button class="exit-btn" id="exitStudio">✕ Esci</button>  <!-- ✅ CORRETTO -->
         <div class="quiz-meta">
             <span class="progress" id="studioProgress">0 di 0</span>
         </div>
@@ -123,16 +135,11 @@
         </div>
     </div>
 </div>
-
-<!-- 1. Firebase SDK (versione compat) -->
+<!-- 1. Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-<!-- 2. Tuoi file -->
-<script src="data.js"></script>
-<script src="app.js"></script>
-
-<!-- 3. Inizializzazione Firebase (versione compat) -->
+<!-- 2. CONFIGURAZIONE FIREBASE (sposta QUI!) -->
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyDtzJVxi7psF2dGsQ3HA5id8exyICNOH9I",
@@ -154,5 +161,9 @@
         window.db = null;
     }
 </script>
+
+<!-- 3. Tuoi file -->
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
