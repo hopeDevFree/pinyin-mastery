@@ -1601,3 +1601,89 @@ h1 {
         padding: 20px;
     }
 }
+
+/* === UNISCI PROGRESSI === */
+.merge-section {
+    border-top: 1.5px dashed var(--border-strong);
+    padding-top: 16px;
+    margin-top: 16px;
+}
+
+.merge-section p {
+    font-size: 0.9rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.merge-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-bottom: 3px solid var(--border-strong);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    background: #f8fafc;
+    color: var(--text);
+}
+
+.merge-input:focus {
+    outline: none;
+    border-color: var(--warning);
+    background: white;
+}
+
+.merge-btn {
+    width: 100%;
+    background: var(--warning);
+    color: white;
+    border: none;
+    border-bottom: 3px solid #c05621;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.merge-btn:active {
+    transform: translateY(1px);
+    border-bottom-width: 2px;
+}
+
+.merge-btn:hover {
+    background: #dd6b20;
+}
+
+.merge-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.merge-result {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.merge-result.success {
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    border: 1.5px solid var(--accent);
+}
+
+.merge-result.error {
+    background: var(--danger-light);
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+}

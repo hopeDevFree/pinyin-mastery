@@ -799,8 +799,8 @@ function generaLibriConPaginazione() {
     if (!container) return;
 
     const libri = [
-        {id: 1, nome: '📘 Libro 1', min: 1, max: 21, classe: 'book-1'},
-        {id: 2, nome: '📙 Libro 2', min: 22, max: 35, classe: 'book-2'}
+        {id: 1, nome: '📘 Libro 1', min: 1, max: 20, classe: 'book-1'},
+        {id: 2, nome: '📙 Libro 2', min: 21, max: 35, classe: 'book-2'}
     ];
 
     container.innerHTML = '';
@@ -1163,6 +1163,135 @@ function setupReportSystem() {
     });
 }
 
+// ===== UNISCI PROGRESSI =====
+function setupMergeSystem() {
+    const mergeBtn = document.getElementById('mergeBtn');
+    const mergeInput = document.getElementById('mergeCodeInput');
+    const mergeResult = document.getElementById('mergeResult');
+
+    if (!mergeBtn || !mergeInput) return;
+
+    mergeBtn.addEventListener('click', async () => {
+        const code = mergeInput.value.trim().toUpperCase();
+        const currentCode = getUserCode();
+
+        if (!code) {
+            alert('Inserisci un codice valido');
+            return;
+        }
+
+        if (code === currentCode) {
+            alert('Non puoi unire un account con se stesso!');
+            return;
+        }
+
+        if (!window.db) {
+            alert('Firebase non disponibile. Riprova quando sei online.');
+            return;
+        }
+
+        mergeBtn.disabled = true;
+        mergeBtn.textContent = 'Caricamento...';
+        mergeResult.style.display = 'none';
+
+        try {
+            // 1. Carica dati dal secondo account
+            const otherLeitner = await loadFromCode(code, 'leitner');
+            const otherMeta = await loadFromCode(code, 'meta');
+            const otherStats = await loadFromCode(code, 'stats');
+
+            if (!otherLeitner && !otherMeta && !otherStats) {
+                throw new Error('Nessun dato trovato per questo codice');
+            }
+
+            // 2. Carica dati attuali
+            const currentLeitner = initLeitnerState();
+            const currentMeta = initMeta();
+            const currentStats = initStats();
+
+            // 3. MERGE LEITNER (tiene il livello più alto per ogni parola)
+            let mergedLeitnerCount = 0;
+            if (otherLeitner) {
+                for (const [id, level] of Object.entries(otherLeitner)) {
+                    const currentLevel = currentLeitner[id] || 1;
+                    if (level > currentLevel) {
+                        currentLeitner[id] = level;
+                        mergedLeitnerCount++;
+                    }
+                }
+            }
+
+            // 4. MERGE META (somma seen/wrong, tiene lastSeen più recente)
+            let mergedMetaCount = 0;
+            if (otherMeta) {
+                for (const [id, data] of Object.entries(otherMeta)) {
+                    if (!currentMeta[id]) {
+                        currentMeta[id] = data;
+                        mergedMetaCount++;
+                    } else {
+                        currentMeta[id].seen = (currentMeta[id].seen || 0) + (data.seen || 0);
+                        currentMeta[id].wrong = (currentMeta[id].wrong || 0) + (data.wrong || 0);
+                        currentMeta[id].lastSeen = Math.max(
+                            currentMeta[id].lastSeen || 0,
+                            data.lastSeen || 0
+                        );
+                        mergedMetaCount++;
+                    }
+                }
+            }
+
+            // 5. MERGE STATS (somma tutto, tiene il migliore streak)
+            if (otherStats) {
+                currentStats.totalAnswers = (currentStats.totalAnswers || 0) + (otherStats.totalAnswers || 0);
+                currentStats.correctAnswers = (currentStats.correctAnswers || 0) + (otherStats.correctAnswers || 0);
+                currentStats.sessions = (currentStats.sessions || 0) + (otherStats.sessions || 0);
+                currentStats.streak = Math.max(currentStats.streak || 0, otherStats.streak || 0);
+                currentStats.bestStreak = Math.max(currentStats.bestStreak || 0, otherStats.bestStreak || 0);
+            }
+
+            // 6. Salva i dati uniti
+            salvaStato(currentLeitner);
+            saveMeta(currentMeta);
+            saveStats(currentStats);
+
+            // 7. Svuota il secondo account (opzionale, per pulizia)
+            try {
+                await window.db.ref(`users/${code}`).remove();
+                console.log('✅ Secondo account svuotato');
+            } catch (e) {
+                console.warn('⚠️ Impossibile svuotare il secondo account:', e.message);
+            }
+
+            // 8. Mostra risultato
+            mergeResult.className = 'merge-result success';
+            mergeResult.innerHTML = `
+                ✅ Unione completata!<br>
+                📚 ${mergedLeitnerCount} parole con livello migliorato<br>
+                📊 ${mergedMetaCount} statistiche parole unite<br>
+                🎯 Totale risposte: ${currentStats.totalAnswers}<br>
+                🔥 Miglior streak: ${currentStats.bestStreak}
+            `;
+            mergeResult.style.display = 'block';
+
+            // Ricarica la home dopo 3 secondi
+            setTimeout(() => {
+                renderHome();
+                mergeInput.value = '';
+            }, 3000);
+
+        } catch (err) {
+            mergeResult.className = 'merge-result error';
+            mergeResult.textContent = '✗ ' + err.message;
+            mergeResult.style.display = 'block';
+        } finally {
+            mergeBtn.disabled = false;
+            mergeBtn.textContent = 'Unisci progressi';
+        }
+    });
+
+    console.log('✅ Sistema unione progressi inizializzato');
+}
+
 // ===== INIT =====
 document.getElementById('modeQuizBtn').addEventListener('click', function () {
     currentMode = 'quiz';
@@ -1183,6 +1312,7 @@ document.getElementById('expertCheckbox').addEventListener('change', function ()
 generaLibriConPaginazione();
 setupUserProfile();
 setupReportSystem();
+setupMergeSystem();
 
 document.getElementById('nextButton').addEventListener('click', nextQuestion);
 document.getElementById('studioCard').addEventListener('click', giraFlashcard);
