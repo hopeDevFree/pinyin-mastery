@@ -1007,8 +1007,37 @@ const wordsByLesson = {
         {hanzi: "照相机", pinyin: "zhàoxiàngjī", italiano: "Macchina fotografica"},
         {hanzi: "中餐", pinyin: "zhōngcān", italiano: "Cucina cinese"},
         {hanzi: "注册", pinyin: "zhùcè", italiano: "Registrarsi"}
-    ]
+    ],
 
+    // ===== CAPITOLO 36 (Supplementare - Cap 21) =====
+    36: [
+        {hanzi: "难", pinyin: "nán", italiano: "Difficile"},
+        {hanzi: "成绩", pinyin: "chéngjì", italiano: "Risultato, voto"},
+        {hanzi: "答案", pinyin: "dá'àn", italiano: "Risposta"},
+        {hanzi: "复杂", pinyin: "fùzá", italiano: "Complesso, complicato"},
+        {hanzi: "明白", pinyin: "míngbai", italiano: "Capire chiaramente"},
+        {hanzi: "容易", pinyin: "róngyì", italiano: "Facile"}
+    ],
+
+// ===== CAPITOLO 37 (Supplementare - Cap 22) =====
+    37: [
+        {hanzi: "本来", pinyin: "běnlái", italiano: "Originariamente"},
+        {hanzi: "多", pinyin: "duō", italiano: "Molto, tanto"},
+        {hanzi: "希望", pinyin: "xīwàng", italiano: "Sperare, speranza"},
+        {hanzi: "以后", pinyin: "yǐhòu", italiano: "Dopo, in seguito"},
+        {hanzi: "以前", pinyin: "yǐqián", italiano: "Prima, in passato"},
+        {hanzi: "帮忙", pinyin: "bāngmáng", italiano: "Aiutare"},
+        {hanzi: "有趣", pinyin: "yǒuqù", italiano: "Interessante, divertente"}
+    ],
+
+// ===== CAPITOLO 38 (Supplementare - Cap 23) =====
+    38: [
+        {hanzi: "分手", pinyin: "fēnshǒu", italiano: "Lasciarsi, rompere"},
+        {hanzi: "总是", pinyin: "zǒngshì", italiano: "Sempre"},
+        {hanzi: "尊重", pinyin: "zūnzhòng", italiano: "Rispettare"},
+        {hanzi: "否则", pinyin: "fǒuzé", italiano: "Altrimenti"},
+        {hanzi: "道歉", pinyin: "dàoqiàn", italiano: "Scusarsi"}
+    ]
 };
 
 // Funzione per sanitizzare ID (rimuove caratteri non validi per Firebase)

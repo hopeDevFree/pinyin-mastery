@@ -800,7 +800,8 @@ function generaLibriConPaginazione() {
 
     const libri = [
         {id: 1, nome: '📘 Libro 1', min: 1, max: 20, classe: 'book-1'},
-        {id: 2, nome: '📙 Libro 2', min: 21, max: 35, classe: 'book-2'}
+        {id: 2, nome: '📙 Libro 2', min: 21, max: 35, classe: 'book-2'},
+        {id: 3, nome: '📖 Parole Supplementari', min: 36, max: 39, classe: 'book-3'}
     ];
 
     container.innerHTML = '';
